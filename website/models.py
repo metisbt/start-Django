@@ -7,3 +7,12 @@ class Contact(models.Model):
     message = models.TextField()
     created_date = models.DateTimeField(auto_now_add = True)
     updated_time = models.DateTimeField(auto_now = True)
+
+    class Meta:
+        # app_label
+
+        # more usef
+        ordering = ['created_date']
+
+    def __str__(self):
+        return self.name
