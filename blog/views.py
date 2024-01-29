@@ -2,22 +2,25 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from blog.models import Post
 from django.utils import timezone
+from datetime import datetime, timezone
 
 
 def blog_view(request):
-    posts = Post.objects.all()
+    posts = Post.objects.filter(published_date__lte=datetime.now(tz=timezone.utc))
 
     for post in posts:
-        if post.published_date <= timezone.now():
-            post.status = True
-        else:
-            continue
-
+        post.status = True
+        post.save()
+        print(post.status)
+    
+    posts = Post.objects.filter(status=True)
     context = {'posts' : posts}
     return render(request, 'blog/blog-home.html', context)
 
 def blog_single(request, pid):
-    post = get_object_or_404(Post, id = pid)
+    posts = Post.objects.filter(status=True)
+    post = get_object_or_404(posts, id = pid)
     post.counted_view += 1
+    post.save()
     context = {'post' : post}
     return render(request, 'blog/blog-single.html', context)
