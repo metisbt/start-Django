@@ -6,14 +6,8 @@ from datetime import datetime, timezone
 
 
 def blog_view(request):
-    posts = Post.objects.filter(published_date__lte=datetime.now(tz=timezone.utc))
-
-    for post in posts:
-        print(post.status)
-        Post.ChangeStatus(post)
-        print(post.status)
+    posts = Post.objects.filter(published_date__lte=datetime.now(tz=timezone.utc), status=True)
     
-    posts = Post.objects.filter(status=True)
     context = {'posts' : posts}
     return render(request, 'blog/blog-home.html', context)
 
