@@ -24,7 +24,7 @@ class Post(models.Model):
         # app_label
 
         # more usef
-        ordering = ['created_date']
+        ordering = ['-created_date']
 
     def __str__ (self):
         return self.title

@@ -17,5 +17,21 @@ def blog_single(request, pid):
     post = get_object_or_404(Post, id = pid, published_date__lte=datetime.now(tz=timezone.utc), status=True)
     post.counted_view += 1
     post.save()
-    context = {'post' : post}
+    try:
+        next_post = post.get_next_by_created_date()
+    except post.DoesNotExist:
+        next_post = False
+
+    try:
+        prev_post = post.get_previous_by_created_date()
+    except post.DoesNotExist:
+        prev_post = False
+
+    
+
+    context = {
+        'post' : post,
+        'next_post' : next_post,
+        'prev_post' : prev_post
+               }
     return render(request, 'blog/blog-single.html', context)
