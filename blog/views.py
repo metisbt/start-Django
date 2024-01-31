@@ -9,8 +9,8 @@ def blog_view(request):
     posts = Post.objects.filter(published_date__lte=datetime.now(tz=timezone.utc))
 
     for post in posts:
-        post.status = True
-        post.save()
+        print(post.status)
+        Post.ChangeStatus(post)
         print(post.status)
     
     posts = Post.objects.filter(status=True)
@@ -18,7 +18,7 @@ def blog_view(request):
     return render(request, 'blog/blog-home.html', context)
 
 def blog_single(request, pid):
-    posts = Post.objects.filter(status=True)
+    posts = Post.objects.filter(published_date__lte=datetime.now(tz=timezone.utc), status=True)
     post = get_object_or_404(posts, id = pid)
     post.counted_view += 1
     post.save()

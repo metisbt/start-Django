@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from datetime import datetime, timezone
 
 class Post(models.Model):
     title = models.CharField(max_length = 255)
@@ -22,5 +24,7 @@ class Post(models.Model):
     def __str__ (self):
         return self.title
     
-    def ChangeStatus(self, s):
-        self.status = s
+    def ChangeStatus(self):
+        if not self.status:
+            self.status = True
+            self.save()
