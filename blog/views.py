@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.models import Post
 from django.utils import timezone
 from datetime import datetime, timezone
@@ -11,6 +11,16 @@ def blog_view(request, **kwargs):
         posts = posts.filter(category__name = kwargs['cat_name'])
     if kwargs.get('author_username') != None:
         posts = posts.filter(author__username = kwargs['author_username'])
+
+    posts = Paginator(posts, 2)
+    try:
+        page_number = request.GET.get('page')
+        posts = posts.page(page_number)
+    except EmptyPage:
+        posts = posts.page(1)
+    except PageNotAnInteger:
+        posts = posts.page(1)
+
     context = {'posts' : posts}
     return render(request, 'blog/blog-home.html', context)
 
