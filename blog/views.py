@@ -36,3 +36,12 @@ def blog_single(request, pid):
         'prev_post' : prev_post
                }
     return render(request, 'blog/blog-single.html', context)
+
+def blog_search(request):
+    posts = Post.objects.filter(status=1)
+    if request.method == 'GET':
+        if s:= request.GET.get('s'):
+            posts= posts.filter(content__contains=s)
+
+    context = {'posts' : posts}
+    return render(request, 'blog/blog-home.html', context)
