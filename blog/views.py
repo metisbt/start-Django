@@ -5,9 +5,10 @@ from django.utils import timezone
 from datetime import datetime, timezone
 
 
-def blog_view(request):
+def blog_view(request, cat_name=None):
     posts = Post.objects.filter(published_date__lte=datetime.now(tz=timezone.utc), status=True)
-    
+    if cat_name:
+            posts = posts.filter(category__name=cat_name)
     context = {'posts' : posts}
     return render(request, 'blog/blog-home.html', context)
 
@@ -26,8 +27,6 @@ def blog_single(request, pid):
         prev_post = post.get_previous_by_created_date()
     except post.DoesNotExist:
         prev_post = False
-
-    
 
     context = {
         'post' : post,
