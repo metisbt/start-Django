@@ -14,7 +14,9 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactFrorm(request.POST)
         if form.is_valid():
-            form.save()
+            new = form.save(commit=False)
+            new.name = 'unkonown'
+            new.save()
             messages.add_message(request, messages.SUCCESS, "Your message has sent successfully.")
         else:
             messages.add_message(request, messages.ERROR, "Your message send failed!")
