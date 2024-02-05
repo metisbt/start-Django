@@ -110,12 +110,10 @@
 
     {% block content %} {% endblock %}
 
-    {% if messages %} {% for message in messages %}
+    <!-- {% if messages %} {% for message in messages %}
     <div class="container">
-      <!-- Modal -->
       <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
-          <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">
@@ -143,17 +141,17 @@
         </div>
       </div>
     </div>
-    {% endfor %} {% endif %}
+    {% endfor %} {% endif %} -->
 
     <!-- body -->
 
-    <!-- {% if messages %} {% for message in messages %}
+    {% if messages %} {% for message in messages %}
     <div
       class="alert {% if message.tags == 'success' %} alert-{{ message.tags }} {% elif message.tags == 'error' %} alert-warning {% endif %}"
     >
       {{ message|safe }}
     </div>
-    {% endfor %} {% endif %} -->
+    {% endfor %} {% endif %}
 
     <!-- start footer Area -->
     <footer class="footer-area section-gap">
