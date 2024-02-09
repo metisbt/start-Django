@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from blog.models import Post
+from blog.models import Post, Comment
 from django.utils import timezone
 from datetime import datetime, timezone
 
@@ -42,10 +42,13 @@ def blog_single(request, pid):
     except post.DoesNotExist:
         prev_post = False
 
+    comment = Comment.objects.filter(post=post.id, approved=True).order_by('-created_date')
+
     context = {
         'post' : post,
         'next_post' : next_post,
-        'prev_post' : prev_post
+        'prev_post' : prev_post,
+        'comment' : comment
                }
     return render(request, 'blog/blog-single.html', context)
 
