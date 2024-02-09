@@ -3,6 +3,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.models import Post, Comment
 from django.utils import timezone
 from datetime import datetime, timezone
+from blog.forms import CommentForm
+from django.contrib import messages
+
 
 
 def blog_view(request, **kwargs):
@@ -27,6 +30,14 @@ def blog_view(request, **kwargs):
     return render(request, 'blog/blog-home.html', context)
 
 def blog_single(request, pid):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "Your comment has sent successfully.")
+        else:
+            messages.add_message(request, messages.ERROR, "Your comment send failed!")
+            
     # posts = Post.objects.filter(published_date__lte=datetime.now(tz=timezone.utc), status=True)
     # post = get_object_or_404(posts, id = pid)
     post = get_object_or_404(Post, id = pid, published_date__lte=datetime.now(tz=timezone.utc), status=True)
@@ -43,12 +54,14 @@ def blog_single(request, pid):
         prev_post = False
 
     comment = Comment.objects.filter(post=post.id, approved=True).order_by('-created_date')
+    form = CommentForm()
 
     context = {
         'post' : post,
         'next_post' : next_post,
         'prev_post' : prev_post,
-        'comment' : comment
+        'comment' : comment,
+        'form' : form
                }
     return render(request, 'blog/blog-single.html', context)
 

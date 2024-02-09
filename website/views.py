@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from website.forms import NameForm, ContactFrorm, NewsletterForm
+from website.forms import NameForm, ContactForm, NewsletterForm
 from django.contrib import messages
 
 
@@ -12,7 +12,7 @@ def about_view(request):
 
 def contact_view(request):
     if request.method == 'POST':
-        form = ContactFrorm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
             new = form.save(commit=False)
             new.name = 'unkonown'
@@ -21,7 +21,7 @@ def contact_view(request):
         else:
             messages.add_message(request, messages.ERROR, "Your message send failed!")
 
-    form = ContactFrorm()
+    form = ContactForm()
     return render(request, 'website/contact.html', {'form': form})
 
 def newsletter_view(request):
