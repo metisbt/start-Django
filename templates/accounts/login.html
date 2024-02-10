@@ -41,6 +41,7 @@
               <h3 class="text-center mb-4">Have an account?</h3>
               <form action="{% url 'accounts:login' %}" class="login-form" method="post">
                 {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}" />
                 {{form.as_p}}
                 <div class="form-group d-md-flex">
                   <div class="w-50">
@@ -69,7 +70,7 @@
       </div>
     </section>
 
-    <script src="{% static 'js/signin-jquery.min.js '%}"></script>
+    <script src="{% static 'js/signin-jquery.min.js' %}"></script>
     <script src="{% static 'js/signin-popper.js' %}"></script>
     <script src="{% static 'js/signin-bootstrap.min.js' %}"></script>
     <script src="{% static 'js/signin-main.js' %}"></script>
