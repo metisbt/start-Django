@@ -1,10 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.models import Post, Comment
 from django.utils import timezone
 from datetime import datetime, timezone
 from blog.forms import CommentForm
 from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+
 
 
 
@@ -56,15 +59,19 @@ def blog_single(request, pid):
     comment = Comment.objects.filter(post=post.id, approved=True).order_by('-created_date')
     form = CommentForm()
 
-    context = {
-        'post' : post,
-        'next_post' : next_post,
-        'prev_post' : prev_post,
-        'comment' : comment,
-        'form' : form
-               }
-    return render(request, 'blog/blog-single.html', context)
-
+    if post.login_require:
+         if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('accounts:login'))
+         else:
+            context = {
+                'post' : post,
+                'next_post' : next_post,
+                'prev_post' : prev_post,
+                'comment' : comment,
+                'form' : form
+                    }
+            return render(request, 'blog/blog-single.html', context)
+        
 def blog_search(request):
     posts = Post.objects.filter(status=1)
     if request.method == 'GET':
