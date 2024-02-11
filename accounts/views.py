@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from accounts.forms import SignupForm
+from accounts.forms import SignupForm, CustomLoginForm
 
 
 
@@ -11,7 +11,7 @@ from accounts.forms import SignupForm
 def login_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            form = AuthenticationForm(request=request, data=request.POST)
+            form = CustomLoginForm(request=request, data=request.POST)
             if form.is_valid():
                 username = form.cleaned_data.get('username')
                 password = form.cleaned_data.get('password')
@@ -20,7 +20,7 @@ def login_view(request):
                     login(request, user)
                     return redirect('/')
         
-        form = AuthenticationForm()
+        form = CustomLoginForm()
         context = {'form' : form}
         return render(request, 'accounts/login.html', context)
     else:
