@@ -200,3 +200,6 @@ INTERNAL_IPS = [
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
 AUTHENTICATION_BACKENDS = ['accounts.backends.EmailThenUsernameModelBackend']
+
+# SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
