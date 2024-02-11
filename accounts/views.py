@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from accounts.forms import SignupForm, CustomLoginForm
 from django.contrib import messages
+from django.core.mail import send_mail
+
 
 
 

@@ -1,4 +1,6 @@
 from django.contrib.auth.backends import ModelBackend, UserModel
+from django.contrib import messages
+
 
 class EmailThenUsernameModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
@@ -11,3 +13,5 @@ class EmailThenUsernameModelBackend(ModelBackend):
         if user:
             username=user.username
         return super().authenticate(request, username, password, **kwargs)
+
+

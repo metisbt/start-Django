@@ -48,9 +48,11 @@
                 </div>
                 {% endfor %} {% endif %}
 
+
               <form action="{% url 'accounts:login' %}" class="login-form" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ next }}" />
+
                 {{form.as_p}}
                 <div class="form-group d-md-flex">
                   <div class="w-50">
