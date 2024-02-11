@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from accounts.forms import SignupForm, CustomLoginForm
+from django.contrib import messages
 
 
 
@@ -19,6 +20,10 @@ def login_view(request):
                 if user is not None:
                     login(request, user)
                     return redirect('/')
+                else:
+                    messages.add_message(request, messages.ERROR, "User is inactive!")
+            else:
+                messages.add_message(request, messages.ERROR, "Username/Email or password is incorrect!")
         
         form = CustomLoginForm()
         context = {'form' : form}

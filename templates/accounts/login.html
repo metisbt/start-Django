@@ -39,6 +39,15 @@
                 <span class="fa fa-user-o"></span>
               </div>
               <h3 class="text-center mb-4">Don't have an account? <a href="{% url 'accounts:signup' %}">Join now</a></h3>
+
+              {% if messages %} {% for message in messages %}
+                <div
+                  class="alert {% if message.tags == 'success' %} alert-{{ message.tags }} {% elif message.tags == 'error' %} alert-warning {% endif %}"
+                >
+                  {{ message|safe }}
+                </div>
+                {% endfor %} {% endif %}
+
               <form action="{% url 'accounts:login' %}" class="login-form" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ next }}" />
