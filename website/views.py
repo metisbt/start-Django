@@ -4,6 +4,10 @@ from website.forms import NameForm, ContactForm, NewsletterForm
 from django.contrib import messages
 
 
+
+def maintenance(request):
+    return render(request, 'config/maintenance.html')
+
 def index_view(request):
     return render(request, 'website/index.html')
 

@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE", 0))
+MAINTENANCE_BYPASS_QUERY = os.environ.get("MAINTENANCE_BYPASS_QUERY")
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -109,6 +114,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'website.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
