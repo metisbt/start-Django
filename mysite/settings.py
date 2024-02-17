@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'taggit',
     'django_summernote',
     'captcha',
+    'maintenance.apps.MaintenanceConfig',
 
 ]
 
@@ -110,6 +111,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'maintenance.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -117,7 +119,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR / 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -210,3 +212,7 @@ EMAIL_HOST_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'msabet0223@gmail.com'
 EMAIL_HOST_PASSWORD = '1401@mahdI'
+
+# maintenance
+MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE", 0))
+MAINTENANCE_BYPASS_QUERY = os.environ.get("MAINTENANCE_BYPASS_QUERY")
