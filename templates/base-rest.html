@@ -1,8 +1,6 @@
-{% load compress %}
 
 {% load static %}
 
-{% compress css %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,15 +49,11 @@
     </section>
 
 
-{% load static %}
-
-{% compress js %}
 
     <script src="{% static 'js/signin-jquery.min.js' %}"></script>
     <script src="{% static 'js/signin-popper.js' %}"></script>
     <script src="{% static 'js/signin-bootstrap.min.js' %}"></script>
     <script src="{% static 'js/signin-main.js' %}"></script>
 
-{% endcompress %}
   </body>
 </html>
