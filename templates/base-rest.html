@@ -1,6 +1,5 @@
-
 {% load static %}
-
+{% load compress %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
+    {% compress css %}
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
       rel="stylesheet"
@@ -23,8 +22,8 @@
     />
 
     <link rel="stylesheet" href="{% static 'css/signin-style.css' %}" />
+    {% endcompress %}
 
-{% endcompress %}
   </head>
   <body>
     <section class="ftco-section">
@@ -49,11 +48,11 @@
     </section>
 
 
-
+    {% compress js %}
     <script src="{% static 'js/signin-jquery.min.js' %}"></script>
     <script src="{% static 'js/signin-popper.js' %}"></script>
     <script src="{% static 'js/signin-bootstrap.min.js' %}"></script>
     <script src="{% static 'js/signin-main.js' %}"></script>
-
+    {% endcompress %}
   </body>
 </html>
