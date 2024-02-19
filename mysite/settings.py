@@ -111,7 +111,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'maintenance.middleware.MaintenanceModeMiddleware',
+    # 'maintenance.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -214,5 +214,6 @@ EMAIL_HOST_USER = 'msabet0223@gmail.com'
 EMAIL_HOST_PASSWORD = '1401@mahdI'
 
 # maintenance
-MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE", 0))
-MAINTENANCE_BYPASS_QUERY = os.environ.get("MAINTENANCE_BYPASS_QUERY")
+# MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE", 0))
+# MAINTENANCE_BYPASS_QUERY = os.environ.get("MAINTENANCE_BYPASS_QUERY")
+MAINTENANCE_MODE = True
