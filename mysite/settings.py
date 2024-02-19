@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h96t^-g2_!=fv9&!f3+#)@^by9^vf_w6o^9#-uq01^xwv^048y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'taggit',
     'django_summernote',
     'captcha',
+    'compressor',
+    'cssmin',
+    'jsmin',
 
 ]
 
@@ -187,6 +190,13 @@ STATICFILES_DIRS = [
     BASE_DIR / "statics",
 ]
 
+STATICFILES_FINDERS = ( ##django compressor
+'django.contrib.staticfiles.finders.FileSystemFinder',
+'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# other finders..
+'compressor.finders.CompressorFinder',
+)
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -212,3 +222,13 @@ EMAIL_HOST_PASSWORD = '1401@mahdI'
 
 # maintenance
 MAINTENANCE_MODE = True
+
+# compress
+COMPRESS_ENABLED = True
+COMPRESS_ROOT = STATIC_ROOT ##django compressor
+COMPRESS_OFFLINE = True
+
+if not COMPRESS_ENABLED: ##django compressor
+    COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = ["compressor.filters.cssmin.CSSMinFilter"]
+COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"] ##django compressor
