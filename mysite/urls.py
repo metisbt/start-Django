@@ -28,6 +28,9 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView
 )
+from django.views.generic.base import TemplateView
+from django.urls import re_path
+
 
 
 sitemaps = {
@@ -38,7 +41,6 @@ sitemaps = {
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('maintenance/', include('maintenance.urls')),
     path('', include('website.urls')),
     path('blog/', include('blog.urls')),
     path(
@@ -63,3 +65,6 @@ urlpatterns = [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 #for media
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.MAINTENANCE_MODE:
+   urlpatterns.insert(0, re_path(r'^', TemplateView.as_view(template_name='config/maintenance.html'), name='maintenance'))
