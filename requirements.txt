@@ -1,5 +1,6 @@
 asgiref==3.7.2
 bleach==6.1.0
+csscompressor==0.9.5
 cssmin==0.2.0
 Django==5.0.2
 django-appconf==1.0.6
